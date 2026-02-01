@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { OnlineTracker } from "@/components/online-tracker"
 import { CookieConsent } from "@/components/cookie-consent"
 import { LegalFooter } from "@/components/legal-footer"
+import { MobileOnlyWrapper } from "@/components/mobile-only-wrapper"
 
 export const metadata: Metadata = {
   title: {
@@ -116,9 +117,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
-        <LegalFooter />
-        <CookieConsent />
+        <MobileOnlyWrapper>
+          {children}
+          <LegalFooter />
+          <CookieConsent />
+        </MobileOnlyWrapper>
         <Toaster />
         <OnlineTracker />
       </body>
