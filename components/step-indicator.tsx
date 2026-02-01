@@ -18,13 +18,13 @@ export function StepIndicator({ currentStep, totalSteps = 4 }: StepIndicatorProp
     <div className="w-full" data-testid="step-indicator" dir="rtl">
       {/* Desktop version */}
       <div className="hidden md:block">
-        <div className="flex items-center justify-between relative px-4 py-6">
+        <div className="flex items-center justify-between relative px-4 py-8">
           {/* Progress line background */}
-          <div className="absolute top-1/2 left-0 right-0 h-1.5 bg-white/20 -translate-y-1/2 mx-16 rounded-full" />
+          <div className="absolute top-1/2 left-0 right-0 h-2 bg-white/15 -translate-y-1/2 mx-16 rounded-full shadow-inner" />
           
           {/* Progress line fill */}
           <div 
-            className="absolute top-1/2 left-0 h-1.5 bg-gradient-to-r from-amber-400 to-yellow-500 -translate-y-1/2 mx-16 transition-all duration-700 ease-out rounded-full shadow-lg shadow-amber-400/30"
+            className="absolute top-1/2 left-0 h-2 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 -translate-y-1/2 mx-16 transition-all duration-1000 ease-out rounded-full shadow-lg shadow-amber-400/40 animate-gradient"
             style={{ width: `calc(${((currentStep - 1) / (totalSteps - 1)) * 100}% - 8rem)` }}
           />
 
@@ -45,19 +45,22 @@ export function StepIndicator({ currentStep, totalSteps = 4 }: StepIndicatorProp
                 {/* Step circle */}
                 <div
                   className={cn(
-                    "w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 border-4",
-                    isCompleted && "bg-gradient-to-br from-[#0a4a68] to-[#0d5a7d] border-[#0a4a68] shadow-lg shadow-[#0a4a68]/40",
-                    isCurrent && "bg-white border-amber-400 shadow-xl shadow-amber-400/30 animate-pulse-glow",
-                    !isCompleted && !isCurrent && "bg-white/10 border-white/30 backdrop-blur-sm"
+                    "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 border-4 relative",
+                    isCompleted && "bg-gradient-to-br from-[#0a4a68] to-[#0d5a7d] border-[#0a4a68]/80 shadow-xl shadow-[#0a4a68]/50",
+                    isCurrent && "bg-white border-amber-400 shadow-2xl shadow-amber-400/40 animate-glow",
+                    !isCompleted && !isCurrent && "bg-white/10 border-white/25 backdrop-blur-md"
                   )}
                 >
+                  {isCurrent && (
+                    <div className="absolute inset-0 rounded-full bg-amber-400/20 animate-ping" style={{ animationDuration: "2s" }} />
+                  )}
                   {isCompleted ? (
-                    <Check className="w-7 h-7 text-white drop-shadow-md" strokeWidth={3} />
+                    <Check className="w-8 h-8 text-white drop-shadow-lg" strokeWidth={3} />
                   ) : (
                     <Icon
                       className={cn(
-                        "w-6 h-6 transition-all duration-300",
-                        isCurrent ? "text-[#0a4a68] scale-110" : "text-white/60"
+                        "w-7 h-7 transition-all duration-500",
+                        isCurrent ? "text-[#0a4a68] scale-110" : "text-white/50"
                       )}
                     />
                   )}

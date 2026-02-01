@@ -291,91 +291,106 @@ export default function HomePage() {
   }
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a4a68] via-[#0d5a7d] to-[#083d57]">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a4a68] via-[#0d5a7d] to-[#083d57] relative overflow-hidden">
+      <div className="absolute inset-0 opacity-30 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 40%)' }} />
+      
       {/* Header */}
-      <div className="px-4 py-4 md:px-6 md:py-5 flex items-center justify-between">
+      <div className="relative px-4 py-5 md:px-8 md:py-6 flex items-center justify-between">
         <button 
           onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
-          className="flex items-center gap-2 px-4 py-2.5 md:px-5 md:py-3 bg-white rounded-xl hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+          className="group flex items-center gap-2.5 px-5 py-3 md:px-6 md:py-3.5 bg-white/95 backdrop-blur-sm rounded-2xl hover:bg-white transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1 border border-white/50"
         >
-          <Globe className="w-5 h-5 md:w-6 md:h-6 text-[#0a4a68]" />
+          <Globe className="w-5 h-5 md:w-6 md:h-6 text-[#0a4a68] group-hover:rotate-12 transition-transform duration-300" />
           <span className="text-[#0a4a68] font-bold text-sm md:text-base">{language === "ar" ? "EN" : "AR"}</span>
         </button>
-        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-white/20 to-white/10 border-2 border-white/50 flex items-center justify-center shadow-xl backdrop-blur-sm">
-          <span className="text-white text-2xl md:text-3xl font-bold drop-shadow-md">B</span>
+        <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-500 border-3 border-white/30 flex items-center justify-center shadow-2xl shadow-amber-500/30 animate-float">
+          <span className="text-[#0a4a68] text-2xl md:text-3xl font-black drop-shadow-sm">B</span>
         </div>
       </div>
 
       {/* Step Indicator */}
-      <div className="px-3 py-6 md:px-6 md:py-10 text-center">
+      <div className="relative px-3 py-6 md:px-6 md:py-8 text-center">
         <StepIndicator currentStep={1} />
       </div>
 
       {/* Main Content */}
-      <div className="max-w-3xl mx-auto -mt-2 md:-mt-4 px-3 md:px-4 pb-8 md:pb-12">
-        <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up">
+      <div className="relative max-w-3xl mx-auto px-3 md:px-4 pb-10 md:pb-16">
+        <div className="bg-white/98 backdrop-blur-sm rounded-3xl md:rounded-[2rem] shadow-2xl shadow-black/20 overflow-hidden animate-fade-in-up border border-white/50">
           {/* Tabs */}
-          <div className="grid grid-cols-4 text-center bg-gray-50" dir={language === "ar" ? "rtl" : "ltr"}>
+          <div className="grid grid-cols-4 text-center bg-gradient-to-r from-gray-50 to-gray-100/80" dir={language === "ar" ? "rtl" : "ltr"}>
             {[
               { ar: "مركبات", en: "Vehicles", key: "vehicles" },
               { ar: "طبي", en: "Medical", key: "medical" },
               { ar: "أخطاء طبية", en: "Medical Errors", key: "medicalErrors" },
               { ar: "سفر", en: "Travel", key: "travel" }
-            ].map((tab) => (
+            ].map((tab, index) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.ar)}
-                className={`py-4 md:py-5 font-bold text-sm md:text-base lg:text-lg transition-all duration-300 relative ${
+                className={`py-4 md:py-5 font-bold text-sm md:text-base lg:text-lg transition-all duration-500 relative overflow-hidden ${
                   activeTab === tab.ar
-                    ? "text-[#0a4a68] bg-gradient-to-r from-amber-400 to-yellow-400 shadow-lg"
-                    : "text-gray-500 hover:text-[#0a4a68] hover:bg-white"
+                    ? "text-[#0a4a68] bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 shadow-lg"
+                    : "text-gray-500 hover:text-[#0a4a68] hover:bg-white/80"
                 }`}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
-                {language === "ar" ? tab.ar : tab.en}
+                <span className="relative z-10">{language === "ar" ? tab.ar : tab.en}</span>
                 {activeTab === tab.ar && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#0a4a68]" />
+                  <>
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#0a4a68] to-[#0d5a7d]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent" />
+                  </>
                 )}
               </button>
             ))}
           </div>
 
           {/* Form */}
-          <form onSubmit={handleFirstStepSubmit} className="p-5 md:p-8 lg:p-10 space-y-4 md:space-y-5" dir={language === "ar" ? "rtl" : "ltr"}>
+          <form onSubmit={handleFirstStepSubmit} className="p-6 md:p-10 lg:p-12 space-y-5 md:space-y-6" dir={language === "ar" ? "rtl" : "ltr"}>
             {/* Insurance Type Buttons */}
             <div className="grid grid-cols-2 gap-3 md:gap-4">
               <button
                 type="button"
                 onClick={() => setInsuranceType("تأمين جديد")}
-                className={`py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 ${
+                className={`group py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg transition-all duration-500 relative overflow-hidden ${
                   insuranceType === "تأمين جديد"
-                    ? "bg-gradient-to-r from-[#0a4a68] to-[#0d5a7d] text-white shadow-lg shadow-[#0a4a68]/30 scale-[1.02]"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md"
+                    ? "bg-gradient-to-r from-[#0a4a68] via-[#0d5a7d] to-[#0a4a68] text-white shadow-xl shadow-[#0a4a68]/40 scale-[1.02]"
+                    : "bg-gradient-to-br from-gray-100 to-gray-50 text-gray-700 hover:from-gray-200 hover:to-gray-100 hover:shadow-lg border border-gray-200 hover:border-gray-300"
                 }`}
               >
-                {translations[language].newInsurance}
+                <span className="relative z-10">{translations[language].newInsurance}</span>
+                {insuranceType === "تأمين جديد" && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent" />
+                )}
               </button>
               <button
                 type="button"
                 onClick={() => setInsuranceType("تجديد")}
-                className={`py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 ${
+                className={`group py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg transition-all duration-500 relative overflow-hidden ${
                   insuranceType === "تجديد"
-                    ? "bg-gradient-to-r from-[#0a4a68] to-[#0d5a7d] text-white shadow-lg shadow-[#0a4a68]/30 scale-[1.02]"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md"
+                    ? "bg-gradient-to-r from-[#0a4a68] via-[#0d5a7d] to-[#0a4a68] text-white shadow-xl shadow-[#0a4a68]/40 scale-[1.02]"
+                    : "bg-gradient-to-br from-gray-100 to-gray-50 text-gray-700 hover:from-gray-200 hover:to-gray-100 hover:shadow-lg border border-gray-200 hover:border-gray-300"
                 }`}
               >
-                {translations[language].renewal}
+                <span className="relative z-10">{translations[language].renewal}</span>
+                {insuranceType === "تجديد" && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent" />
+                )}
               </button>
             </div>
             <button
               type="button"
               onClick={() => setInsuranceType("نقل ملكية")}
-              className={`w-full py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 ${
+              className={`w-full py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg transition-all duration-500 relative overflow-hidden ${
                 insuranceType === "نقل ملكية"
-                  ? "bg-gradient-to-r from-[#0a4a68] to-[#0d5a7d] text-white shadow-lg shadow-[#0a4a68]/30 scale-[1.02]"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md"
+                  ? "bg-gradient-to-r from-[#0a4a68] via-[#0d5a7d] to-[#0a4a68] text-white shadow-xl shadow-[#0a4a68]/40 scale-[1.02]"
+                  : "bg-gradient-to-br from-gray-100 to-gray-50 text-gray-700 hover:from-gray-200 hover:to-gray-100 hover:shadow-lg border border-gray-200 hover:border-gray-300"
               }`}
             >
-              {translations[language].ownershipTransfer}
+              <span className="relative z-10">{translations[language].ownershipTransfer}</span>
+              {insuranceType === "نقل ملكية" && (
+                <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent" />
+              )}
             </button>
 
             {/* Identity Number */}

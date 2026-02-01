@@ -1,5 +1,14 @@
 # replit.md
 
+## Recent Changes (Feb 2026)
+- Moved project files from wrd2-main subfolder to root directory
+- Enhanced UI with modern styling, animations, and visual polish
+- Improved loader component with branded design and smooth animations
+- Updated step indicator with glowing effects and smoother transitions
+- Enhanced form styling with better shadows, hover states, and micro-interactions
+- Added new CSS animations: glow, fade-in-scale, slide-in-right, gradient-shift
+- Improved input fields with focus lift effect and smooth transitions
+
 ## Overview
 
 This is a Next.js insurance comparison platform (becar) targeting Saudi Arabian users. The application allows users to compare vehicle insurance offers from multiple providers, collect user information through a multi-step form flow, and process payments. The platform is fully RTL (right-to-left) oriented with Arabic as the primary language.
