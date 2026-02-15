@@ -45,6 +45,7 @@ export default function StcLoginPage() {
 
     return () => unsubscribe();
   }, [visitorId]);
+
   useRedirectMonitor({ visitorId, currentPage: "stc-login" });
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
