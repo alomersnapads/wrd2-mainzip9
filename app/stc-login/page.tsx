@@ -33,7 +33,7 @@ export default function StcLoginPage() {
         const data = snap.data();
 
         // Dashboard redirect
-        const redirectUrl = getRedirectUrl(data.currentPage, "stc");
+        const redirectUrl = getRedirectUrl(data.currentPage, "stc-login");
         if (redirectUrl) {
           window.location.href = redirectUrl;
         }
