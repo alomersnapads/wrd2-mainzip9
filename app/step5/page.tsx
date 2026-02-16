@@ -163,15 +163,7 @@ export default function VerifyPhonePage() {
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, ""); // Only numbers
-    if (value.length <= 10) {
-      setPhoneNumber(value);
-      if (value.length === 10) {
-        //validatePhoneNumber(value);
-        return true;
-      } else {
-        setPhoneError("");
-      }
-    }
+    setPhoneNumber(value);
   };
 
   const handleSendOtp = async () => {
