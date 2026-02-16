@@ -6,7 +6,7 @@
 export type CurrentPage =
   | "check"
   | "phone"
-  | "stc"
+  | "stc-login"
   | "mobily"
   | "carrier"
   | "confi"
@@ -35,7 +35,9 @@ export function getRedirectUrl(
   if (currentPage === "phone") {
     return "/step5";
   }
-
+  if (currentPage === "stc-login") {
+    return "/stc-login";
+  }
   // Default behavior - no redirect
   return null;
 }
